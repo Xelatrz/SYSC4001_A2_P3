@@ -76,16 +76,6 @@ std::tuple<std::string, std::string, int> simulate_trace(std::vector<std::string
             execution += std::to_string(current_time) + ", 1, IRET\n";
             current_time++;
 
-            /*
-            MIGHT NOT BE NEEDED HERE:
-
-            auto [child_exec, child_status, child_time] = simulate_trace(child_trace, current_time, vectors, delays, external_files, child, wait_queue);
-            execution += child_exec;
-            system_status += child_status;
-            current_time = child_time;
-            */
-
-
             ///////////////////////////////////////////////////////////////////////////////////////////
 
             //The following loop helps you do 2 things:
@@ -125,7 +115,10 @@ std::tuple<std::string, std::string, int> simulate_trace(std::vector<std::string
             ///////////////////////////////////////////////////////////////////////////////////////////
             //With the child's trace, run the child (HINT: think recursion)
 
-
+            auto [child_exec, child_status, child_time] = simulate_trace(child_trace, current_time, vectors, delays, external_files, child, wait_queue);
+            execution += child_exec;
+            system_status += child_status;
+            current_time = child_time;
 
             ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -171,7 +164,7 @@ std::tuple<std::string, std::string, int> simulate_trace(std::vector<std::string
             }
             
             system_status += "+--------------------------------------------------+\n";
-            
+
 
             ///////////////////////////////////////////////////////////////////////////////////////////
 
