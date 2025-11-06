@@ -2,6 +2,7 @@
  *
  * @file interrupts.cpp
  * @author Sasisekhar Govind
+ * @author Taylor Brumwell
  *
  */
 
@@ -50,7 +51,39 @@ std::tuple<std::string, std::string, int> simulate_trace(std::vector<std::string
 
             ///////////////////////////////////////////////////////////////////////////////////////////
             //Add your FORK output here
+            
+            execution += std::to_string(current_time) + "' " + std::to_string(duration_intr) + ", cloning the PCB\n";
+            current_time += duration_intr;
 
+            PCB child(current.PID + 1, current.PID, current.program_name, current.size, -1);
+            allocate_memory(&child);
+
+            current.PID = 0;
+            child.PID = 1;
+            current_state = "waiting";
+            child_state = "running";
+
+            wait_queue.push_back(current);
+
+            system_status += "time: " + std::to_string(current_time) + "; current trace: FORK, " + std::to_string(duration_intr) + "\n";
+            system_status += "+--------------------------------------------------+\n";
+            system_status += "| PID | program name | partition number | size | state |\n";
+            system_status += "+--------------------------------------------------+\n";
+            system_status += "| 1 | " + child.program_name + " | " + std::to_string(child.partition_number) + " | " + std::to_string(child.size) + " | running |\n";
+            system_status += "| 0 | " + current.program_name + " | " + std::to_string(current.partition_number) + " | " + std::to_string(curremt.size) + " | waiting |\n";
+
+            execution += std::to_string(current_time) + ", 0, scheduler called\n";
+            execution += std::to_string(current_time) + ", 1, IRET\n";
+            current_time++;
+
+            /*
+            MIGHT NOT BE NEEDED HERE:
+
+            auto [child_exec, child_status, child_time] = simulate_trace(child_trace, current_time, vectors, delays, external_files, child, wait_queue);
+            execution += child_exec;
+            system_status += child_status;
+            current_time = child_time;
+            */
 
 
             ///////////////////////////////////////////////////////////////////////////////////////////
@@ -104,7 +137,8 @@ std::tuple<std::string, std::string, int> simulate_trace(std::vector<std::string
 
             ///////////////////////////////////////////////////////////////////////////////////////////
             //Add your EXEC output here
-
+            
+            
 
 
             ///////////////////////////////////////////////////////////////////////////////////////////
