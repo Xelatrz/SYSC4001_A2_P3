@@ -138,8 +138,40 @@ std::tuple<std::string, std::string, int> simulate_trace(std::vector<std::string
             ///////////////////////////////////////////////////////////////////////////////////////////
             //Add your EXEC output here
             
-            
+            auto it = std::find_if(exteral_files.begin(), external_files.end(), [&](const external_file& ef) {return ef.program_name == program_name;});
+            if(it == external_files.end()) {
+                std::cerr << "Program not found: " program_name << std::endl;
+                continue;
+            }
 
+            unsigned int prog_size = it->size;
+            unsigned int load_time = prog_size * 15;
+
+            execution += std::to_string(current_time) + ", " + std::to_string(duration_intr) + ", Program is " + std::to_string(prog_size) + " Mb\n";
+            current_time += duration_intr;
+            execution += std::to_string(current_time) + ", " + std::to_string(load_time) + ", loading program into memory\n";
+            current_time += load_time;
+            execution += std::to_string(current_time) + ", 3, marking partitions as occupied\n";
+            current_time += 3;
+            execution += std::to_string(current_time) + ", 6, updating PCB\n";
+            current_time += 6;
+
+            current.program_name = program_name;
+            current.size = prog_size;
+            allocate_memory(&current);
+
+            system_status += "time: " + std::to_string(current_time) + "; current trace: EXEC " + program_name + ", " + std::to_string(duration_intr) + "\n";
+            system_status += "+--------------------------------------------------+\n";
+            system_status += "| PID | program name | partition number | size | state |\n";
+            system_status += "+--------------------------------------------------+\n";
+            system_status += "| " + std::to_string(current.PID) + " | " + current.program_name + " | " + std::to_string(current.partition_number) + " | " + std::to_string(current.size) + " | running |\n";
+
+            for (auto &p : wait_queue) {
+                system_status += "| " + std::to_string(p.PID) + " | " + p.program_name + " | " + std::to_string(p.partition_number) + " | " + std::to_string(p.size) + " | waiting |\n";
+            }
+            
+            system_status += "+--------------------------------------------------+\n";
+            
 
             ///////////////////////////////////////////////////////////////////////////////////////////
 
