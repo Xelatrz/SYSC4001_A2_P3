@@ -52,14 +52,14 @@ std::tuple<std::string, std::string, int> simulate_trace(std::vector<std::string
             ///////////////////////////////////////////////////////////////////////////////////////////
             //Add your FORK output here
             
-            execution += std::to_string(current_time) + "' " + std::to_string(duration_intr) + ", cloning the PCB\n";
+            execution += std::to_string(current_time) + ", " + std::to_string(duration_intr) + ", cloning the PCB\n";
             current_time += duration_intr;
 
             PCB child(current.PID + 1, current.PID, current.program_name, current.size, -1);
+            child.PID = current.PID + 1;
             allocate_memory(&child);
+            current.PID = current.PID;
 
-            current.PID = 0;
-            child.PID = 1;
             std::string current_state;
             std::string child_state;
             current_state = "waiting";
@@ -141,7 +141,7 @@ std::tuple<std::string, std::string, int> simulate_trace(std::vector<std::string
             }
 
             unsigned int prog_size = it->size;
-            unsigned int load_time = prog_size * 15;
+            unsigned int load_time = prog_size * load_speed;
 
             execution += std::to_string(current_time) + ", " + std::to_string(duration_intr) + ", Program is " + std::to_string(prog_size) + " Mb\n";
             current_time += duration_intr;
@@ -222,7 +222,7 @@ int main(int argc, char** argv) {
 
     /******************ADD YOUR VARIABLES HERE*************************/
 
-
+    const int load_speed = 15;
     
     /******************************************************************/
 
