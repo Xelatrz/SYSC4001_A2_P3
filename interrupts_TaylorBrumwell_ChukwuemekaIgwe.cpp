@@ -68,12 +68,12 @@ std::tuple<std::string, std::string, int> simulate_trace(std::vector<std::string
             wait_queue.push_back(current);
 
             system_status += "time: " + std::to_string(current_time) + "; current trace: FORK, " + std::to_string(duration_intr) + "\n";
-            system_status += "+--------------------------------------------------+\n";
+            system_status += "+------------------------------------------------------+\n";
             system_status += "| PID | program name | partition number | size | state |\n";
-            system_status += "+--------------------------------------------------+\n";
+            system_status += "+------------------------------------------------------+\n";
             system_status += "| 1 | " + child.program_name + " | " + std::to_string(child.partition_number) + " | " + std::to_string(child.size) + " | running |\n";
             system_status += "| 0 | " + current.program_name + " | " + std::to_string(current.partition_number) + " | " + std::to_string(current.size) + " | waiting |\n";
-            system_status += "+--------------------------------------------------+\n";
+            system_status += "+------------------------------------------------------+\n";
 
             execution += std::to_string(current_time) + ", 0, scheduler called\n";
             execution += std::to_string(current_time) + ", 1, IRET\n";
@@ -158,16 +158,16 @@ std::tuple<std::string, std::string, int> simulate_trace(std::vector<std::string
             allocate_memory(&current);
 
             system_status += "time: " + std::to_string(current_time) + "; current trace: EXEC " + program_name + ", " + std::to_string(duration_intr) + "\n";
-            system_status += "+--------------------------------------------------+\n";
+            system_status += "+------------------------------------------------------+\n";
             system_status += "| PID | program name | partition number | size | state |\n";
-            system_status += "+--------------------------------------------------+\n";
+            system_status += "+------------------------------------------------------+\n";
             system_status += "| " + std::to_string(current.PID) + " | " + current.program_name + " | " + std::to_string(current.partition_number) + " | " + std::to_string(current.size) + " | running |\n";
 
             for (auto &p : wait_queue) {
                 system_status += "| " + std::to_string(p.PID) + " | " + p.program_name + " | " + std::to_string(p.partition_number) + " | " + std::to_string(p.size) + " | waiting |\n";
             }
             
-            system_status += "+--------------------------------------------------+\n";
+            system_status += "+------------------------------------------------------+\n";
 
 
             ///////////////////////////////////////////////////////////////////////////////////////////
