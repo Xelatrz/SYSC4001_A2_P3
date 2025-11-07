@@ -71,6 +71,7 @@ std::tuple<std::string, std::string, int> simulate_trace(std::vector<std::string
             system_status += "+--------------------------------------------------+\n";
             system_status += "| 1 | " + child.program_name + " | " + std::to_string(child.partition_number) + " | " + std::to_string(child.size) + " | running |\n";
             system_status += "| 0 | " + current.program_name + " | " + std::to_string(current.partition_number) + " | " + std::to_string(curremt.size) + " | waiting |\n";
+            system_status += "+--------------------------------------------------+\n";
 
             execution += std::to_string(current_time) + ", 0, scheduler called\n";
             execution += std::to_string(current_time) + ", 1, IRET\n";
