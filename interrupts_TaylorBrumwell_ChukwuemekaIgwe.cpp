@@ -222,10 +222,8 @@ int main(int argc, char** argv) {
 
     /******************ADD YOUR VARIABLES HERE*************************/
 
-    unsigned int current_time = 0;
-    unsigned int next_pid = 1;
 
-
+    
     /******************************************************************/
 
     //Converting the trace file into a vector of strings.
