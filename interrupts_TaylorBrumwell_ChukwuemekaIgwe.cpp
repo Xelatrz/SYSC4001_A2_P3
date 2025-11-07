@@ -60,6 +60,8 @@ std::tuple<std::string, std::string, int> simulate_trace(std::vector<std::string
 
             current.PID = 0;
             child.PID = 1;
+            std::string current_state;
+            std::string child_state;
             current_state = "waiting";
             child_state = "running";
 
@@ -222,8 +224,7 @@ int main(int argc, char** argv) {
 
     unsigned int current_time = 0;
     unsigned int next_pid = 1;
-    std::string current_state = "";
-    std::string child_state = "";
+
 
     /******************************************************************/
 
