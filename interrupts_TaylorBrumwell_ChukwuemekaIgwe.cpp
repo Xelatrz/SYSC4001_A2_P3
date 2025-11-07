@@ -70,7 +70,7 @@ std::tuple<std::string, std::string, int> simulate_trace(std::vector<std::string
             system_status += "| PID | program name | partition number | size | state |\n";
             system_status += "+--------------------------------------------------+\n";
             system_status += "| 1 | " + child.program_name + " | " + std::to_string(child.partition_number) + " | " + std::to_string(child.size) + " | running |\n";
-            system_status += "| 0 | " + current.program_name + " | " + std::to_string(current.partition_number) + " | " + std::to_string(curremt.size) + " | waiting |\n";
+            system_status += "| 0 | " + current.program_name + " | " + std::to_string(current.partition_number) + " | " + std::to_string(current.size) + " | waiting |\n";
             system_status += "+--------------------------------------------------+\n";
 
             execution += std::to_string(current_time) + ", 0, scheduler called\n";
@@ -132,9 +132,9 @@ std::tuple<std::string, std::string, int> simulate_trace(std::vector<std::string
             ///////////////////////////////////////////////////////////////////////////////////////////
             //Add your EXEC output here
             
-            auto it = std::find_if(exteral_files.begin(), external_files.end(), [&](const external_file& ef) {return ef.program_name == program_name;});
+            auto it = std::find_if(external_files.begin(), external_files.end(), [&](const external_file& ef) {return ef.program_name == program_name;});
             if(it == external_files.end()) {
-                std::cerr << "Program not found: " program_name << std::endl;
+                std::cerr << "Program not found: " << program_name << std::endl;
                 continue;
             }
 
