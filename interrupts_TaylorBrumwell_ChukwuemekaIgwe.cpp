@@ -222,6 +222,8 @@ int main(int argc, char** argv) {
 
     unsigned int current_time = 0;
     unsigned int next_pid = 1;
+    std::string current_state = "";
+    std::string child_state = "";
 
     /******************************************************************/
 
