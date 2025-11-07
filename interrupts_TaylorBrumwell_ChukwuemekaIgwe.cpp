@@ -140,6 +140,7 @@ std::tuple<std::string, std::string, int> simulate_trace(std::vector<std::string
                 continue;
             }
 
+            const int load_speed = 15;
             unsigned int prog_size = it->size;
             unsigned int load_time = prog_size * load_speed;
 
@@ -222,7 +223,7 @@ int main(int argc, char** argv) {
 
     /******************ADD YOUR VARIABLES HERE*************************/
 
-    const int load_speed = 15;
+    
     
     /******************************************************************/
 
